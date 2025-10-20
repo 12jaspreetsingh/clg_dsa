@@ -1,14 +1,12 @@
-#include <iostream> // For input/output operations (cin, cout)
-#include <vector>   // For using std::vector
+#include <iostream>
+#include <vector>
 #include <algorithm> // For std::reverse (optional, but convenient)
-#include <limits>   // For std::numeric_limits
+#include <limits>
 
-// --- Helper Functions for Input/Display ---
 
-// Function to get array input from the user
 void getArrayInput(std::vector<int>& arr, int size) {
-    arr.clear(); // Clear any existing elements
-    arr.reserve(size); // Pre-allocate memory
+    arr.clear();
+    arr.reserve(size);
 
     std::cout << "Enter " << size << " elements:" << std::endl;
     for (int i = 0; i < size; ++i) {
@@ -36,9 +34,9 @@ void display1DArray(const std::vector<int>& arr, const std::string& message = "A
     std::cout << std::endl;
 }
 
-// Function to get matrix input from the user
+
 void getMatrixInput(std::vector<std::vector<int>>& matrix, int rows, int cols) {
-    matrix.assign(rows, std::vector<int>(cols)); // Resize and initialize matrix with zeros
+    matrix.assign(rows, std::vector<int>(cols));
 
     std::cout << "Enter elements for the " << rows << "x" << cols << " matrix:" << std::endl;
     for (int i = 0; i < rows; ++i) {
@@ -53,7 +51,7 @@ void getMatrixInput(std::vector<std::vector<int>>& matrix, int rows, int cols) {
     }
 }
 
-// Function to display a matrix
+
 void displayMatrix(const std::vector<std::vector<int>>& matrix, const std::string& message = "Matrix elements: ") {
     if (matrix.empty() || matrix[0].empty()) {
         std::cout << "Matrix is empty." << std::endl;
@@ -62,13 +60,13 @@ void displayMatrix(const std::vector<std::vector<int>>& matrix, const std::strin
     std::cout << message << std::endl;
     for (const auto& row : matrix) {
         for (int element : row) {
-            std::cout << element << "\t"; // Use tab for better alignment
+            std::cout << element << "\t";
         }
         std::cout << std::endl;
     }
 }
 
-// --- Problem 4.a: Reverse the elements of an array ---
+
 void reverseArray() {
     int size;
     std::cout << "\n--- Reversing Array Elements ---" << std::endl;
@@ -83,14 +81,11 @@ void reverseArray() {
     getArrayInput(arr, size);
     display1DArray(arr, "Original array: ");
 
-    // Method 1: Using std::reverse (simplest C++ way)
-    // std::reverse(arr.begin(), arr.end());
 
-    // Method 2: Manual reversal using two pointers (as hinted)
     int start = 0;
     int end = arr.size() - 1;
     while (start < end) {
-        // Swap elements
+
         int temp = arr[start];
         arr[start] = arr[end];
         arr[end] = temp;
@@ -103,7 +98,7 @@ void reverseArray() {
     display1DArray(arr, "Reversed array: ");
 }
 
-// --- Problem 4.b: Find the matrix multiplication ---
+
 void matrixMultiplication() {
     std::cout << "\n--- Matrix Multiplication ---" << std::endl;
     int r1, c1, r2, c2;
@@ -118,7 +113,6 @@ void matrixMultiplication() {
     std::cout << "Enter columns for Matrix B: ";
     while (!(std::cin >> c2) || c2 <= 0) { /* validation */ std::cout << "Invalid. Enter positive: "; std::cin.clear(); std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); }
 
-    // Condition for matrix multiplication
     if (c1 != r2) {
         std::cout << "Matrix multiplication not possible! Columns of Matrix A must be equal to rows of Matrix B." << std::endl;
         return;
@@ -132,13 +126,13 @@ void matrixMultiplication() {
     getMatrixInput(matB, r2, c2);
     displayMatrix(matB, "Matrix B:");
 
-    // Resultant matrix will have dimensions r1 x c2
+
     std::vector<std::vector<int>> resultMat(r1, std::vector<int>(c2, 0));
 
-    // Three nested loops for matrix multiplication
-    for (int i = 0; i < r1; ++i) { // Iterating through rows of result matrix (and A)
-        for (int j = 0; j < c2; ++j) { // Iterating through columns of result matrix (and B)
-            for (int k = 0; k < c1; ++k) { // Iterating through columns of A and rows of B
+
+    for (int i = 0; i < r1; ++i) {
+        for (int j = 0; j < c2; ++j) {
+            for (int k = 0; k < c1; ++k) {
                 resultMat[i][j] += matA[i][k] * matB[k][j];
             }
         }
@@ -147,7 +141,6 @@ void matrixMultiplication() {
     displayMatrix(resultMat, "Result of Matrix A * Matrix B:");
 }
 
-// --- Problem 4.c: Find the Transpose of a Matrix ---
 void transposeMatrix() {
     std::cout << "\n--- Transpose of a Matrix ---" << std::endl;
     int rows, cols;
@@ -161,10 +154,10 @@ void transposeMatrix() {
     getMatrixInput(originalMat, rows, cols);
     displayMatrix(originalMat, "Original Matrix:");
 
-    // Transpose matrix will have dimensions cols x rows
+
     std::vector<std::vector<int>> transposeMat(cols, std::vector<int>(rows));
 
-    // Iterate through original matrix and swap rows and columns for transpose
+
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
             transposeMat[j][i] = originalMat[i][j];
